@@ -1,0 +1,164 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel ="stylesheet" href="style.css"/>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="#home" id="navbar__logo">private lessons</a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__items">
+                    <a href="http://127.0.0.1:5500/my%20web.html" class="navbar__links" id="home-page">main</a>
+                </li>
+                <li class="navbar__item">
+                  <a button id="open-table-students" class="navbar__links">Students</a>
+                  <div id="table-container-students" ></div>
+                </li>
+                <li class="navbar__item">
+                    <a button id="open-table-lessons" class="navbar__links">Lessons</a>
+                    <div id="table-container-lessons"></div>
+                </li>
+                <li class="navbar__btn">
+                    <button class="button" id="reports" onclick="openForm3()" >Reports & Amounts</button>
+                </li>
+                <li class="navbar__btn">
+                    <button class="button" id="add student"onclick="openForm1()">Add student</button>
+                </li>
+                <li class="navbar__btn">
+                    <button class="button" id="add lesson" onclick="openForm2()">Add lesson</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- class 1 -->
+   
+    <div class="form-popup" id="myForm1">
+    <form action="http://localhost:5000/students" method="post" class="form-container" id="myForm">
+        <h1>Add Student</h1>
+
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" name="name" id="student" required>
+
+        <label for="price"><b>Price</b></label>
+        <input type="number" placeholder="Enter Price" name="price" id="price" required>
+
+        Permanent?: <input type="checkbox" id="permanent" onclick="Functionbox()" name="permanent" placeholder="false">
+
+        <p id="text" style="display:none">
+            <label for="myCheckbox">Select a day and time:</label>
+            <input type="datetime-local" id="myCheckbox" name="date_of_beginning" value="false" onchange="toggleSchedule()">
+        </p>
+        <button type="submit" class="btn" >Add</button>
+        <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+    </form>
+    </div>
+<!-- class 2 -->
+
+    <div class="form-popup" id="myForm2">
+    <form action="http://localhost:5000/lessons" class="form-container" method="post" id="myFormLessons">
+            <h1>Add Lesson</h1>
+    
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter Name" name="name"  required>
+    
+            <label for="payment"><b>Payment</b></label>
+            <input type="number" placeholder="Enter Payment" name="payment" required>
+
+            <label for="date-input">Select a date:</label>
+            <input type="datetime-local" id="date-input" name="date">
+
+            <button type="submit" class="btn">Add</button>
+            <button type="button" class="btn cancel" onclick="closeForm2()">Close</button>
+        </form>
+    </div>
+
+    <!-- class 3 -->
+            <div class="form-popup" id="myForm3">
+            <div class="form-container">
+              <h1>Reports</h1>
+                <button type="submit" class="btn" id="Toaldebts">Get total debt</button>
+                <button type="submit" class="btn" id="ToalSums">Get total amounts</button> 
+            <br>
+            <br>
+            <label for="date-input" &emsp>From date:</label>
+            <input type="datetime-local" id="date-input-start" name="date">
+            <br>
+            <label for="date-input">To date:</label>
+            <input type="datetime-local" id="date-input-end" name="date">
+            <br>
+            <button id="myButton1" onclick="getAmountDates()" class="btnamount">Get amounts between the dates</button>  
+            <br>
+            <br>
+            <!-- name by click -->
+            <label for="name" class="byname">Get debt by name:</label>
+            <button id="myButton" onclick="getDebtByName()">Search</button>            
+            <br>
+            <br>
+            <label for="name1" class="name">Get amount by name:</label>
+            <button id="myButton" onclick="getamountByName()" >Search</button>
+            <input type="text" placeholder="Enter Name" name="name" id="name">
+            </button>
+            <button type="button" class="btn cancel" onclick="closeForm3()">Close</button>
+          </div>
+        </div>
+        <div class="update-lesson">
+          <button class="updtaeLesson" onclick="OpenUpdate()">Update lesson</button>
+          <div id="UpdateModal" class="modalupdae">
+            <div class="modal-update">
+              <input type="text" id="nameInput" placeholder="Enter Name" class="labelinput">
+              <button onclick="updateLesson()">OK</button>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div id="ModalOfSums" class="modal">
+          <div class="modal-content"> 
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h2>The total amount of your lessons is:</h2>
+            </div>
+            <div class="modal-body" id="sumid">
+              <p><b><script>
+                 fetch('http://127.0.0.1:5000/moneyEarned')
+                 .then(response => response.text())
+                 .then(data => {
+                  var number= document.getElementById("sumid")
+                  number.innerHTML=data
+                });
+              </script></b></p>
+            </div>
+          </div>
+        </div>
+        <div id="ModalOfDebts" class="modal">
+          <div class="modal-content"> 
+            <div class="modal-header">
+              <span class="close1">&times;</span>
+              <h2>The total debts is:</h2>
+            </div>
+            <div class="modal-body" id="debtid">
+              <script>
+                  fetch('http://127.0.0.1:5000/sum_debt')
+                 .then(response => response.text())
+                 .then(data => {
+                  var number= document.getElementById("debtid")
+                  number.innerHTML=data
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
+
