@@ -1,0 +1,5 @@
+DB_NAME = "PrivateTutor"
+STUDENT_COLLECTION_NAME = "student"
+LESSON_COLLECTION_NAME = "lesson"
+MONGO_HOST = "localhost"
+MONGO_PORT = 27017
