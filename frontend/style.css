@@ -1,0 +1,438 @@
+  *{
+    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Kumbh Sans',sans-serif;
+    scroll-behavior:smooth;
+}
+body{
+    background-color: #a2a2ab;
+}
+.navbar {
+    background: #131313;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    padding: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.navbar__container{
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    z-index: 1;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+#navbar__logo{
+    background-color: cornflowerblue;
+    background-image: linear-gradient(to top,#ff0453 0%,#ffb199 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+}
+.navbar__menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+.navbar__items{
+    height: 80px;
+}
+.navbar__links {
+    color:rgb(188, 171, 143);
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: 125px;
+    text-decoration: none;
+    height: 100%;
+    transition:all 0.3s ease ;  
+}
+.navbar__btn {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    padding: 0 1rem;
+    width: 100%;
+}
+.button {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    text-decoration: none;
+    padding:20px 25px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    background: #170b0b;
+    background: -webkit-linear-gradient(to right,#c27e1f,#b85252,#8b50b2);
+    background: linear-gradient(to right,#c27e1f,#b85252,#8b50b2);
+    color: #fff;
+    transition:all 0.3s ease ;
+    cursor: pointer;
+}
+.navbar__links:hover{
+    color: #d1ab31;
+    transition:all 0.3s ease ; 
+
+}
+@media screen and (max-width: 960px){
+    .navbar__container {
+        display: flex;
+        justify-content:space-between;
+        height: 80px;
+        z-index: 1;
+        width: 100%;
+        max-width: 1300px;
+        margin: 0;
+    }
+    .navbar__menu{
+        display: grid;
+        grid-template-columns: auto;
+        margin: 0;
+        width: 100%;
+        position: absolute;
+        top: -1000px;
+        opacity: 1;
+        transition:all 0.5s ease ;
+        z-index: -1;
+
+
+    }
+    .navbar__menu.active{
+        background: #131313;
+        top: 100%;
+        opacity: 1;
+        transition:all 0.5s ease ;
+        z-index: 99;
+        height: 60vh;
+        font-size: 1.6rem;
+    }
+    #navbar__logo{
+        padding-left: 25px;
+    }
+    .navbar__toggle.bar{
+        display: block;
+        cursor: pointer;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        transition:all 0.3s ease ;
+        background: #000000;
+    }
+    .navbar__items{
+        width: 100%;
+    }
+    .navbar__links{
+        text-align: center;
+        padding: 2 rem;
+        width: 100%;
+        display: table;
+    }
+    .navbar__btn{
+        padding-bottom: 2rem;
+    }
+    .button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        height: 80px;
+        margin: 0;
+    }
+    #mobile-menu{
+        position: absolute;
+        top: 20%;
+        right: 5%;
+        transform: translate(5%,20%);
+    }
+    #mobile-menu.is_active .bar:nth-child(2){
+        opacity: 0;
+    }
+    #mobile-menu.is_active .bar:nth-child(1){
+        transform: translateY(8px) rotate(45deg);
+    }
+    #mobile-menu.is_active .bar:nth-child(3){
+        transform: translateY(-8px) rotate(-45deg);
+
+    }
+} 
+
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 1;
+  right: 495px;
+  border: 2px solid #f1f1f1;
+  z-index: 1;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 10px;
+  margin: 2px 0 9px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=number]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+
+.form-container input[type=number], .form-container input[type=password] {
+  width: 100%;
+  padding: 10px;
+  margin: 2px 0 9px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=text]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #2232e8;
+  color: white;
+  padding: 8px 11px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+.update-lesson .updtaeLesson{
+  position: absolute;
+  right: 1%;
+  top: 15%;
+  background-color: #fa9326;
+  color: rgb(39, 38, 38);
+  cursor: pointer;
+  border: #131313;
+  padding: 8px 8px;
+  font-size: medium;
+  margin-bottom:10px;
+}
+
+.form-container .btnamount{
+  background-color: #7917f2;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: rgb(171, 26, 26);
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 0; /* Sit on top */
+    left: -20px;
+    top: 1;
+    width: 30%; 
+    height: 60%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(241, 242, 234); /* Fallback color */
+    background-color:#a2a2ab; /* Grey w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s;
+    justify-content:center;
+    align-items: center;
+    padding: 0 1rem;
+  }
+  
+  .modal-content {
+    bottom: 0;
+    background-color: #fefefe;
+    height: 25%;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+  }
+  .modalupdae{
+    position: absolute;
+    display: none;
+    right: 2%;
+    top: 22%;
+    background-color: #a2a2ab;
+    height: 10%;
+    margin: auto;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #681010;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .modal-header {
+    padding: 2px 16px;
+    background-color: #1d212d;
+    color: white;
+  }
+  
+  .modal-body {padding: 2px 16px;}
+  
+  /* Add Animation */
+  @-webkit-keyframes slideIn {
+    from {bottom: -30px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+  }
+  
+  @keyframes slideIn {
+    from {bottom: -30px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+  }
+  
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+  }
+  
+  /* The Close Button */
+  .close1 {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close1:hover,
+  .close1:focus {
+    color: #681010;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #open-table-students {
+    cursor: pointer;
+  }
+
+  #open-table-lessons{
+    cursor: pointer;
+  }
+  #table-container-students{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 800px;
+  }
+  #table-container-lessons{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 800px;
+    
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 2px;
+    text-align: left;
+    font-size: medium;
+    
+  }
+  th {
+    background-color: #5e1212;
+    color: white;
+    position: sticky;
+    top: 0;
+
+  }
+  
+  tr:nth-child(even) {
+    background-color: #efe9e9;
+    font-size: medium;
+  }
+  
+  tr:hover {
+    background-color: #ddd;
+    font-size: medium;
+  }
+table th button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  position: sticky;
+}
+
+table th button:hover {
+  background-color: #d32f2f;
+  
+}
