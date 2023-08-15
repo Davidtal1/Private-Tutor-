@@ -1,4 +1,5 @@
 
+
 function openForm1() {
     document.getElementById("myForm1").style.display = "block";
     closeForm2()
@@ -54,7 +55,6 @@ span.onclick = function() {
   
 }
 
-
 // *****************************************************************************
 var modaldebt = document.getElementById("ModalOfDebts");
 
@@ -108,6 +108,7 @@ function toggleSchedule() {
   
   document.getElementById("open-table-students").addEventListener("click", function() {
     closeTable("lessons");
+    closeTable("students");
     fetch("http://127.0.0.1:5000/students")
       .then(response => response.json())
       .then(data => {
@@ -116,13 +117,12 @@ function toggleSchedule() {
         // Add table header with column names and a close button
         table += "<thead>";
         table += "<tr>";
-        table += "<th colspan='4'><button onclick='closeTable(\"students\")'>X</button></th>";
         table += "</tr>";
         table += "<tr>";
         table += "<th>Name</th>";
         table += "<th>Price</th>";
         table += "<th>Permanent</th>";
-        table += "<th>Date of start</th>";
+        table += "<th>Date of start <button class='close-button' onclick='closeTable(\"students\");'>X</button></th>";
         table += "</tr>";
         table += "</thead>";
   
@@ -137,16 +137,15 @@ function toggleSchedule() {
           table += "</tr>";
         });
         table += "</tbody>";
-  
         table += "</table>";
         let tableContainer = createTableContainer(table);
         tableContainers.students.appendChild(tableContainer);
         shortTheTable(tableContainer);
       });
   });
-  
   document.getElementById("open-table-lessons").addEventListener("click", function() {
     closeTable("students");
+    closeTable("lessons");
     fetch("http://127.0.0.1:5000/lessons")
       .then(response => response.json())
       .then(data => {
@@ -155,12 +154,11 @@ function toggleSchedule() {
         // Add table header with column names and a close button
         table += "<thead>";
         table += "<tr>";
-        table += "<th colspan='4'><button onclick='closeTable(\"lessons\")'>X</button></th>";
         table += "</tr>";
         table += "<tr>";
         table += "<th>Name</th>";
         table += "<th>Payment</th>";
-        table += "<th>Date</th>";
+        table += "<th>Date <button class='close-button' onclick='closeTable(\"lessons\")';>X</button></th>";
         table += "</tr>";
         table += "</thead>";
   
@@ -383,6 +381,8 @@ function OpenUpdate() {
 }
 
 function updateLesson() {
+  closeTable("students");
+  closeTable("lessons");
   var name = document.getElementById("nameInput").value;
   modal.style.display = "none";
   var url="http://localhost:5000/lessons_by_name?name="+ encodeURIComponent(name);
@@ -394,12 +394,11 @@ function updateLesson() {
         // Add table header with column names and a close button
         table += "<thead>";
         table += "<tr>";
-        table += "<th colspan='4'><button onclick='closeUpdateTable()'>X</button></th>";
         table += "</tr>";
         table += "<tr>";
         table += "<th>Name</th>";
         table += "<th>Payment</th>";
-        table += "<th>Date</th>";
+        table += "<th>Date <button class='close-button' onclick='closeTable(\"lessons\")';>X</button></th>";
         table += "</tr>";
         table += "</thead>";
   
@@ -407,9 +406,9 @@ function updateLesson() {
         table += "<tbody>";
         data.forEach(lesson => {
           table += "<tr>";
-          table += "<td>" + lesson.name + "</td>";
-          table += "<td ondblclick='onPriceDoubleClick(event)'>" + lesson.payment+ "</td>";
-          table += "<td>" + lesson.date + "</td>";
+          table += "<td class='lessonname'>" + lesson.name + "</td>";
+          table += "<td class='lessonpay' ondblclick='onPriceDoubleClick(event)'>" + lesson.payment+ "</td>";
+          table += "<td class='lessondate'>" + lesson.date + "</td>";
           table += "</tr>";
         });
         table += "</tbody>";
@@ -418,14 +417,14 @@ function updateLesson() {
         tableContainers.lessons.appendChild(tableContainer);
         shortTheTable(tableContainer);
 })};
-function closeUpdateTable()
-{
-  let tableContainer = document.getElementById("updateTable");
-  tableContainer.parentNode.removeChild(tableContainer);
+// function closeUpdateTable()
+// {
+//   let tableContainer = document.getElementById("updateTable");
+//   tableContainer.parentNode.removeChild(tableContainer);
   
-  // Clear the data stored in tableContainers
-  tableContainers.lessons.innerHTML = "";// not necessary
-}
+//   // Clear the data stored in tableContainers
+//   tableContainers.lessons.innerHTML = "";// not necessary
+// }
 
 
 function onPriceDoubleClick(event) {
@@ -438,7 +437,7 @@ function onPriceDoubleClick(event) {
   // Replace the cell content with the input field
   event.target.textContent = '';
   event.target.appendChild(inputField);
-
+  
   // Add a "Save" button
   const saveButton = document.createElement('button');
   saveButton.textContent = 'Save';
@@ -446,27 +445,98 @@ function onPriceDoubleClick(event) {
   saveButton.style.color = 'white';
   saveButton.style.cursor='pointer';
   saveButton.onclick = () => {
-    const newValue = inputField.value;
-
+    const updatePay = inputField.value;
+    
     // Update the price value in the data and in the table
     const lessonIndex = event.target.parentNode.rowIndex - 1;
-    data[lessonIndex].payment = newValue;
-    event.target.textContent = newValue;
+    
+    var Name=document.getElementsByClassName("lessonname")[lessonIndex-1].innerHTML
+    var Date=document.getElementsByClassName("lessondate")[lessonIndex-1].innerHTML
+    
 
-    //shilo func
-    var updatePay=data[lessonIndex].Payment;
-    var Date=data[lessonIndex].Date;
-    var Name=data[lessonIndex].Name;
-
-    setTheChanges(Name,updatePay,Date)
-    // Remove the input field and save button
-    event.target.removeChild(inputField);
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'Fetch PUT Request Example' })
+  };
+    var url= `http://127.0.0.1:5000/lesson?name=${encodeURIComponent(Name)}&payment=${encodeURIComponent(updatePay)}&date=${encodeURIComponent(Date)}`
+    fetch(url,requestOptions)
     event.target.removeChild(saveButton);
+
   };
   event.target.appendChild(saveButton);
 }
 
-function setTheChanges(name,pay,date)
+
+function descending()
 {
-  
+  closeTable("students");
+  closeTable("lessons");
+  var url=  'http://127.0.0.1:5000/sortmaxtomin';
+  fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        let table = "<table class='lessons-table' id='dataTable'>";
+        table += "<thead>";
+        table += "<tr>";
+        table += "<th>Name</th>";
+        table += "<th>Payment <button class='close-button' onclick='closeTable(\"lessons\")';>X</button></th>";
+        table += "</tr>";
+        table += "</thead>";
+
+
+        table += "<tbody>";
+      for (const key in data) {
+        const value = data[key];
+        if (typeof value === 'number') {
+          table += "<tr>";
+          table+="<td>"+key+"</td>";
+          table+="<td>"+value+"</td>";
+          table += "</tr>";
+        }
+      }
+          table += "</tbody>";
+          table += "</table>";
+      let tableContainer = createTableContainer(table);
+      tableContainers.lessons.appendChild(tableContainer);
+      shortTheTable(tableContainer);
+})};
+
+function ascending()
+{
+  closeTable("students");
+  closeTable("lessons");
+  var url=  'http://127.0.0.1:5000/sortmintomax';
+  fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        let table = "<table class='lessons-table' id='dataTable'>";
+        table += "<thead>";
+        table += "<tr>";
+        table += "<th>Name</th>";
+        table += "<th>Payment <button class='close-button' onclick='closeTable(\"lessons\")';>X</button></th>";
+        table += "</tr>";
+        table += "</thead>";
+
+
+        table += "<tbody>";
+      for (const key in data) {
+        const value = data[key];
+        if (typeof value === 'number') {
+          table += "<tr>";
+          table+="<td>"+key+"</td>";
+          table+="<td>"+value+"</td>";
+          table += "</tr>";
+        }
+      }
+          table += "</tbody>";
+          table += "</table>";
+      let tableContainer = createTableContainer(table);
+      tableContainers.lessons.appendChild(tableContainer);
+      shortTheTable(tableContainer);
+})};
+
+function showSortButtons() {
+  var sortButtonsDiv = document.getElementById("sortButtons");
+  sortButtonsDiv.style.display = "block";
 }
