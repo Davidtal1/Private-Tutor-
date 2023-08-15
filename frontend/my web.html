@@ -72,7 +72,10 @@
             <input type="text" placeholder="Enter Name" name="name"  required>
     
             <label for="payment"><b>Payment</b></label>
-            <input type="number" placeholder="Enter Payment" name="payment" required>
+            <input type="number" placeholder="Enter Payment" name="payment"  value="0" required>
+
+            <label for="duration"><b>duration</b></label>
+            <input type="number" placeholder="Enter duration" name="duration" step="0.01" value="1">
 
             <label for="date-input">Select a date:</label>
             <input type="datetime-local" id="date-input" name="date">
@@ -81,7 +84,6 @@
             <button type="button" class="btn cancel" onclick="closeForm2()">Close</button>
         </form>
     </div>
-
     <!-- class 3 -->
             <div class="form-popup" id="myForm3">
             <div class="form-container">
@@ -97,7 +99,6 @@
             <input type="datetime-local" id="date-input-end" name="date">
             <br>
             <button id="myButton1" onclick="getAmountDates()" class="btnamount">Get amounts between the dates</button>  
-            <br>
             <br>
             <!-- name by click -->
             <label for="name" class="byname">Get debt by name:</label>
@@ -119,6 +120,13 @@
               <button onclick="updateLesson()">OK</button>
             </div>
           </div>
+        </div>
+        </div>
+        <div id="buttonContainer">
+          <button id="showNamesButton" onclick="showSortButtons()" class="show-names-button">Show Names Next to Payment</button>
+          <div id="sortButtons" style="display: none;" class="sort-buttons-container">
+            <button class="ascending-button" onclick="ascending()">Ascending Order</button>
+            <button class="descending-button" onclick="descending()">Descending Order</button>
           </div>
         </div>
         <div id="ModalOfSums" class="modal">
@@ -161,4 +169,3 @@
 <script src="app.js"></script>
 </body>
 </html>
-
