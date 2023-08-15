@@ -22,9 +22,6 @@ We can see that we can see how much a specific student pay to you in total or ho
 
 
 
-Now, if we want to update the payment, we can click on update payment and find all the lessons by his name and double click the payment and then we can write the new payment and payment will be saved
-![‏‏צילום מסך (101)](https://github.com/Davidtal1/Private-Tutor-/assets/120554789/910cce2d-4357-49b3-b4f6-d30a1cc24192)
-
 
 
 
